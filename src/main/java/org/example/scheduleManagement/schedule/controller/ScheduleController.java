@@ -17,39 +17,43 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-
     @PostMapping("/users/{userId}/schedules")
     public ResponseEntity<SchedulePostResponse> schedulePost(
             @RequestBody SchedulePostRequest schedulePostRequest,
             @PathVariable Long userId
     ) {
-        return ResponseEntity.ok(scheduleService.createSchedule(schedulePostRequest,userId));
+        return ResponseEntity.ok(scheduleService.createSchedule(userId, schedulePostRequest));
     }
 
-    @GetMapping("/schedules")
-    public ResponseEntity<List<ScheduleGetResponse>> getSchedules() {
-        return ResponseEntity.ok(scheduleService.getSchedules());
+    @GetMapping("/users/{userId}/schedules")
+    public ResponseEntity<List<ScheduleGetResponse>> getSchedules(
+            @PathVariable Long userId
+    ) {
+        return ResponseEntity.ok(scheduleService.getSchedules(userId));
     }
 
-    @GetMapping("/schedules/{scheduleId}")
+    @GetMapping("/users/{userId}/schedules/{scheduleId}")
     public ResponseEntity<ScheduleGetResponse> getSchedule(
+            @PathVariable Long userId,
             @PathVariable Long scheduleId
-    ){
-        return ResponseEntity.ok(scheduleService.getSchedule(scheduleId));
+    ) {
+        return ResponseEntity.ok(scheduleService.getSchedule(userId, scheduleId));
     }
 
-    @PutMapping("/schedules/{scheduleId}")
+    @PutMapping("/users/{userId}/schedules/{scheduleId}")
     public ResponseEntity<SchedulePutResponse> updateSchedule(
             @RequestBody SchedulePutRequest schedulePutRequest,
+            @PathVariable Long userId,
             @PathVariable Long scheduleId
-    ){
-        return ResponseEntity.ok(scheduleService.updateSchedule(scheduleId, schedulePutRequest));
+    ) {
+        return ResponseEntity.ok(scheduleService.updateSchedule(userId, scheduleId, schedulePutRequest));
     }
 
-    @DeleteMapping("/schedules/{scheduleId}")
+    @DeleteMapping("/users/{userId}/schedules/{scheduleId}")
     public void deleteSchedule(
+            @PathVariable Long userId,
             @PathVariable Long scheduleId
-    ){
-        scheduleService.deleteSchedule(scheduleId);
+    ) {
+        scheduleService.deleteSchedule(userId, scheduleId);
     }
 }

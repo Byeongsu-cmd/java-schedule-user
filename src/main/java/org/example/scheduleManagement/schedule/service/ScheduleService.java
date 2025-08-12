@@ -24,9 +24,9 @@ public class ScheduleService {
 
     // 일정 등록
     @Transactional
-    public SchedulePostResponse createSchedule(SchedulePostRequest schedulePostRequest, Long userId) {
+    public SchedulePostResponse createSchedule(Long userId, SchedulePostRequest schedulePostRequest) {
         User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
-                ()-> new IllegalArgumentException("유저를 찾을 수 없습니다.")
+                () -> new IllegalArgumentException("유저를 찾을 수 없습니다.") // 예외 처리
         );
         Schedule schedule = new Schedule(
                 schedulePostRequest.getUserName(),
@@ -47,8 +47,14 @@ public class ScheduleService {
 
     // 일정 전체 조회
     @Transactional(readOnly = true)
-    public List<ScheduleGetResponse> getSchedules() {
-        List<Schedule> schedules = scheduleRepository.findAll();
+    public List<ScheduleGetResponse> getSchedules(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
+                () -> new IllegalArgumentException("유저를 찾을 수 없습니다.") // 예외 처리
+        );
+
+        // 유저 아이디와 일정을 작성한 유저가 같다면 해당 유저의 전체 일정을 조회
+        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
+
         List<ScheduleGetResponse> scheduleGetResponses = new ArrayList<>();
         for (Schedule schedule : schedules) {
             scheduleGetResponses.add(new ScheduleGetResponse(
@@ -65,9 +71,9 @@ public class ScheduleService {
 
     // 일정 단건 조회
     @Transactional(readOnly = true)
-    public ScheduleGetResponse getSchedule(Long scheduleId) {
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 일정입니다.")
+    public ScheduleGetResponse getSchedule(Long userId, Long scheduleId) {
+        Schedule schedule = scheduleRepository.findByUserIdAndId(userId, scheduleId).orElseThrow( // 유저 아이디 검증 로직
+                () -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.") // 예외 처리
         );
         return new ScheduleGetResponse(
                 schedule.getId(),
@@ -81,9 +87,9 @@ public class ScheduleService {
 
     // 일정 수정
     @Transactional
-    public SchedulePutResponse updateSchedule(Long scheduleId, SchedulePutRequest schedulePutRequest) {
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 일정입니다.")
+    public SchedulePutResponse updateSchedule(Long userId, Long scheduleId, SchedulePutRequest schedulePutRequest) {
+        Schedule schedule = scheduleRepository.findByUserIdAndId(userId, scheduleId).orElseThrow( // 유저 아이디 검증 로직
+                () -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.") // 예외 처리
         );
         schedule.updateSchedule(
                 schedulePutRequest.getTitle(),
@@ -101,9 +107,9 @@ public class ScheduleService {
 
     // 일정 삭제
     @Transactional
-    public void deleteSchedule(Long scheduleId) {
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 일정입니다.")
+    public void deleteSchedule(Long userId, Long scheduleId) {
+        Schedule schedule = scheduleRepository.findByUserIdAndId(userId, scheduleId).orElseThrow( // 유저 아이디 검증 로직
+                () -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.") // 예외 처리
         );
         scheduleRepository.deleteById(scheduleId);
     }

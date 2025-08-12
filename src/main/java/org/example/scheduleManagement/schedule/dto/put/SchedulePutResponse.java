@@ -13,7 +13,14 @@ public class SchedulePutResponse {
     private final LocalDateTime createTime;
     private final LocalDateTime updateTime;
 
-    public SchedulePutResponse(Long id, String userName, String title, String content, LocalDateTime createTime, LocalDateTime updateTime) {
+    public SchedulePutResponse(
+            Long id,
+            String userName,
+            String title,
+            String content,
+            LocalDateTime createTime,
+            LocalDateTime updateTime
+    ) {
         this.id = id;
         this.userName = userName;
         this.title = title;

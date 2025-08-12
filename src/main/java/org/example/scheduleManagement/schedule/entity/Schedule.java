@@ -18,10 +18,10 @@ public class Schedule extends BaseEntity {
     private String content; // 일정 내용
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Schedule(String userName,String title, String content, User user) {
+    public Schedule(String userName, String title, String content, User user) {
         this.userName = userName;
         this.title = title;
         this.content = content;
