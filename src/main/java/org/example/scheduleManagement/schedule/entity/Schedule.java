@@ -1,12 +1,10 @@
 package org.example.scheduleManagement.schedule.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.scheduleManagement.baseEntity.BaseEntity;
+import org.example.scheduleManagement.user.entity.User;
 
 @Entity
 @Getter
@@ -19,10 +17,15 @@ public class Schedule extends BaseEntity {
     private String title; // 일정 제목
     private String content; // 일정 내용
 
-    public Schedule(String userName,String title, String content) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id",nullable = false)
+    private User user;
+
+    public Schedule(String userName,String title, String content, User user) {
         this.userName = userName;
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 
     public void updateSchedule(String title, String content) {

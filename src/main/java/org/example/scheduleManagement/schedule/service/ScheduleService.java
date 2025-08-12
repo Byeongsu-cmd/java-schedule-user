@@ -8,6 +8,8 @@ import org.example.scheduleManagement.schedule.dto.put.SchedulePutRequest;
 import org.example.scheduleManagement.schedule.dto.put.SchedulePutResponse;
 import org.example.scheduleManagement.schedule.entity.Schedule;
 import org.example.scheduleManagement.schedule.repository.ScheduleRepository;
+import org.example.scheduleManagement.user.entity.User;
+import org.example.scheduleManagement.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +20,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     // 일정 등록
     @Transactional
-    public SchedulePostResponse createSchedule(SchedulePostRequest schedulePostRequest) {
+    public SchedulePostResponse createSchedule(SchedulePostRequest schedulePostRequest, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
+                ()-> new IllegalArgumentException("유저를 찾을 수 없습니다.")
+        );
         Schedule schedule = new Schedule(
                 schedulePostRequest.getUserName(),
                 schedulePostRequest.getTitle(),
-                schedulePostRequest.getContent()
+                schedulePostRequest.getContent(),
+                user // 유저 아이디
         );
         scheduleRepository.save(schedule);
         return new SchedulePostResponse(

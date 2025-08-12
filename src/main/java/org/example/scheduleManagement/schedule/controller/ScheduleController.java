@@ -17,11 +17,13 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @PostMapping("/schedules")
+
+    @PostMapping("/users/{userId}/schedules")
     public ResponseEntity<SchedulePostResponse> schedulePost(
-            @RequestBody SchedulePostRequest schedulePostRequest
+            @RequestBody SchedulePostRequest schedulePostRequest,
+            @PathVariable Long userId
     ) {
-        return ResponseEntity.ok(scheduleService.createSchedule(schedulePostRequest));
+        return ResponseEntity.ok(scheduleService.createSchedule(schedulePostRequest,userId));
     }
 
     @GetMapping("/schedules")
