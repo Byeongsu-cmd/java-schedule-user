@@ -51,10 +51,10 @@ public class UserController {
     }
 
     // 유저 정보 삭제
-    @DeleteMapping("/{userId}")
+    @PostMapping("/{userId}")
     public void deleteUser(
             @PathVariable Long userId,
-            @RequestParam UserDeleteRequest userDeleteRequest
+            @RequestBody UserDeleteRequest userDeleteRequest
     ) {
         userService.deleteUser(userId, userDeleteRequest);
     }

@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class ScheduleDeleteRequest {
-    private String userPassword;
+    private String password;
 }

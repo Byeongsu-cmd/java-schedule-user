@@ -1,6 +1,7 @@
 package org.example.scheduleManagement.schedule.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduleManagement.schedule.dto.delete.ScheduleDeleteRequest;
 import org.example.scheduleManagement.schedule.dto.get.ScheduleGetResponse;
 import org.example.scheduleManagement.schedule.dto.post.SchedulePostRequest;
 import org.example.scheduleManagement.schedule.dto.post.SchedulePostResponse;
@@ -50,11 +51,12 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.updateSchedule(userId, scheduleId, schedulePutRequest));
     }
 
-    @DeleteMapping("/{userId}/schedules/{scheduleId}")
+    @PostMapping("/{userId}/schedules/{scheduleId}")
     public void deleteSchedule(
             @PathVariable Long userId,
-            @PathVariable Long scheduleId
+            @PathVariable Long scheduleId,
+            @RequestBody ScheduleDeleteRequest scheduleDeleteRequest
     ) {
-        scheduleService.deleteSchedule(userId, scheduleId);
+        scheduleService.deleteSchedule(userId, scheduleId, scheduleDeleteRequest);
     }
 }

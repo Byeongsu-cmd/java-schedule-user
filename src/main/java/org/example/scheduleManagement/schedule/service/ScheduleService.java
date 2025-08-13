@@ -1,6 +1,7 @@
 package org.example.scheduleManagement.schedule.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduleManagement.schedule.dto.delete.ScheduleDeleteRequest;
 import org.example.scheduleManagement.schedule.dto.get.ScheduleGetResponse;
 import org.example.scheduleManagement.schedule.dto.post.SchedulePostRequest;
 import org.example.scheduleManagement.schedule.dto.post.SchedulePostResponse;
@@ -67,7 +68,7 @@ public class ScheduleService {
         }
 
         // 출력을 타입이 List<ScheduleGetResponse>이니 출력 형태를 맞추기위해 새로운 리스트 생성
-        // 향상된 for문을 사용하여 DB에 저장되어 있는 데이터들을 일정 등록 리스폰스에 담아서 출력한다.
+        // 향상된 for 문을 사용하여 DB에 저장되어 있는 데이터들을 일정 등록 리스폰스에 담아서 출력한다.
         List<ScheduleGetResponse> scheduleGetResponses = new ArrayList<>();
         for (Schedule schedule : schedules) {
             User user = schedule.getUser();
@@ -140,10 +141,24 @@ public class ScheduleService {
 
     // 일정 삭제
     @Transactional
-    public void deleteSchedule(Long userId, Long scheduleId) {
+    public void deleteSchedule(Long userId, Long scheduleId, ScheduleDeleteRequest scheduleDeleteRequest) {
         Schedule schedule = scheduleRepository.findByUserIdAndId(userId, scheduleId).orElseThrow( // 유저 아이디 검증 로직
                 () -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.") // 예외 처리
         );
+
+        User user = schedule.getUser();
+        // 비밀번호의 입력 값이 null이 아닐 때
+        if (scheduleDeleteRequest.getPassword() != null) {
+            // 입력한 비밀번호가 저장된 비밀번호의 값과 다르다면 예외 처리
+            if (!scheduleDeleteRequest.getPassword().equals(user.getPassword())) {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+        } else {
+            // 비밀번호의 값이 null일 경우
+            throw new IllegalArgumentException("비밀번호를 입력해주세요.");
+        }
+
+
         scheduleRepository.deleteById(scheduleId);
     }
 }

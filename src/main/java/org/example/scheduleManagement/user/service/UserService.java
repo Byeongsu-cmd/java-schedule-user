@@ -76,12 +76,12 @@ public class UserService {
                 () -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")
         );
         // 비밀번호의 입력 값이 null이 아닐 때
-        if (userPutRequest.getPassword()!= null) {
+        if (userPutRequest.getPassword() != null) {
             // 입력한 비밀번호가 저장된 비밀번호의 값과 다르다면 예외 처리
-            if(!userPutRequest.getPassword().equals(user.getPassword())) {
+            if (!userPutRequest.getPassword().equals(user.getPassword())) {
                 throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
             }
-        } else{ // 비밀번호의 값이 null일 경우
+        } else { // 비밀번호의 값이 null일 경우
             throw new IllegalArgumentException("비밀번호를 입력해주세요.");
         }
 
@@ -106,9 +106,9 @@ public class UserService {
                 () -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")
         );
         // 비밀번호의 입력 값이 null이 아닐 때
-        if(userDeleteRequest.getPassword()!= null) {
+        if (userDeleteRequest.getPassword() != null) {
             // 입력한 비밀번호가 저장된 비밀번호의 값과 다르다면 예외 처리
-            if(!userDeleteRequest.getPassword().equals(user.getPassword())) {
+            if (!userDeleteRequest.getPassword().equals(user.getPassword())) {
                 throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
             }
         } else { // 비밀번호의 값이 null일 경우
