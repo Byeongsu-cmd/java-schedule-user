@@ -16,13 +16,13 @@ public class User extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     public User(String userName, String email, String password) {

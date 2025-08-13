@@ -4,4 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class LoginResponse {
+    private String userName;
+
+    public LoginResponse(String userName) {
+        this.userName = userName;
+    }
 }

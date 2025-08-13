@@ -21,23 +21,23 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
-    // 유저 등록
-    @Transactional
-    public UserPostResponse createUser(UserPostRequest userPostRequest) {
-        User user = new User(
-                userPostRequest.getUserName(),
-                userPostRequest.getEmail(),
-                userPostRequest.getPassword()
-        );
-        userRepository.save(user);
-        return new UserPostResponse(
-                user.getId(),
-                user.getUserName(),
-                user.getEmail(),
-                user.getCreateTime(),
-                user.getModifiedTime()
-        );
-    }
+//    // 유저 등록
+//    @Transactional
+//    public UserPostResponse createUser(UserPostRequest userPostRequest) {
+//        User user = new User(
+//                userPostRequest.getUserName(),
+//                userPostRequest.getEmail(),
+//                userPostRequest.getPassword()
+//        );
+//        userRepository.save(user);
+//        return new UserPostResponse(
+//                user.getId(),
+//                user.getUserName(),
+//                user.getEmail(),
+//                user.getCreateTime(),
+//                user.getModifiedTime()
+//        );
+//    }
 
     // 유저 전체 조회
     public List<UserGetResponse> getUsers() {

@@ -19,13 +19,13 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    // 유저 등록
-    @PostMapping()
-    public ResponseEntity<UserPostResponse> createUser(
-            @RequestBody UserPostRequest userPostRequest
-    ) {
-        return ResponseEntity.ok(userService.createUser(userPostRequest));
-    }
+//    // 유저 등록
+//    @PostMapping()
+//    public ResponseEntity<UserPostResponse> createUser(
+//            @RequestBody UserPostRequest userPostRequest
+//    ) {
+//        return ResponseEntity.ok(userService.createUser(userPostRequest));
+//    }
 
     // 유저 전체 조회
     @GetMapping()
