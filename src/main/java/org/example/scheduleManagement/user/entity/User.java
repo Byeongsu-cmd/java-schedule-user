@@ -1,9 +1,6 @@
 package org.example.scheduleManagement.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.scheduleManagement.baseEntity.BaseEntity;
@@ -11,13 +8,21 @@ import org.example.scheduleManagement.baseEntity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "User")
 public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "user_name", nullable = false)
     private String userName;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "password", nullable = false)
     private String password;
 
     public User(String userName, String email, String password) {

@@ -9,12 +9,21 @@ import org.example.scheduleManagement.user.entity.User;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "Schedule")
 public class Schedule extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id; // 고유 아이디
+
+    @Column(name = "user_name", nullable = false)
     private String userName; // 임시 유저 이름
+
+    @Column(name = "title", nullable = false)
     private String title; // 일정 제목
+
+    @Column(name = "content", nullable = false)
     private String content; // 일정 내용
 
     @ManyToOne(fetch = FetchType.LAZY)

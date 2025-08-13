@@ -17,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
 
@@ -39,7 +40,6 @@ public class UserService {
     }
 
     // 유저 전체 조회
-    @Transactional(readOnly = true)
     public List<UserGetResponse> getUsers() {
         List<User> users = userRepository.findAll();
         List<UserGetResponse> userGetResponses = new ArrayList<>();
@@ -56,7 +56,6 @@ public class UserService {
     }
 
     // 선택 유저 조회
-    @Transactional(readOnly = true)
     public UserGetResponse getUserById(Long userId) {
         User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증
                 () -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")

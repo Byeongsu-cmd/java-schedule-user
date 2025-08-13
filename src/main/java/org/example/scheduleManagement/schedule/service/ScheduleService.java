@@ -8,6 +8,7 @@ import org.example.scheduleManagement.schedule.dto.put.SchedulePutRequest;
 import org.example.scheduleManagement.schedule.dto.put.SchedulePutResponse;
 import org.example.scheduleManagement.schedule.entity.Schedule;
 import org.example.scheduleManagement.schedule.repository.ScheduleRepository;
+import org.example.scheduleManagement.user.dto.scheduleDto.ScheduleUserResponse;
 import org.example.scheduleManagement.user.entity.User;
 import org.example.scheduleManagement.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
@@ -34,8 +36,14 @@ public class ScheduleService {
                 schedulePostRequest.getContent(),
                 user // 유저 아이디
         );
+        ScheduleUserResponse scheduleUserResponse = new ScheduleUserResponse(
+                user.getId(),
+                user.getUserName(),
+                user.getEmail()
+        );
         scheduleRepository.save(schedule);
         return new SchedulePostResponse(
+                scheduleUserResponse,
                 schedule.getId(),
                 schedule.getUserName(),
                 schedule.getTitle(),
@@ -46,7 +54,6 @@ public class ScheduleService {
     }
 
     // 일정 전체 조회
-    @Transactional(readOnly = true)
     public List<ScheduleGetResponse> getSchedules(Long userId) {
         // 일정 전체 조회 로직
         List<Schedule> schedules = scheduleRepository.findAll();
@@ -63,7 +70,14 @@ public class ScheduleService {
         // 향상된 for문을 사용하여 DB에 저장되어 있는 데이터들을 일정 등록 리스폰스에 담아서 출력한다.
         List<ScheduleGetResponse> scheduleGetResponses = new ArrayList<>();
         for (Schedule schedule : schedules) {
+            User user = schedule.getUser();
+            ScheduleUserResponse scheduleUserResponse = new ScheduleUserResponse(
+                    user.getId(),
+                    user.getUserName(),
+                    user.getEmail()
+            );
             scheduleGetResponses.add(new ScheduleGetResponse(
+                    scheduleUserResponse,
                     schedule.getId(),
                     schedule.getUserName(),
                     schedule.getTitle(),
@@ -76,12 +90,18 @@ public class ScheduleService {
     }
 
     // 일정 단건 조회
-    @Transactional(readOnly = true)
     public ScheduleGetResponse getSchedule(Long userId, Long scheduleId) {
         Schedule schedule = scheduleRepository.findByUserIdAndId(userId, scheduleId).orElseThrow( // 유저 아이디 검증 로직
                 () -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.") // 예외 처리
         );
+        User user = schedule.getUser();
+        ScheduleUserResponse scheduleUserResponse = new ScheduleUserResponse(
+                user.getId(),
+                user.getUserName(),
+                user.getEmail()
+        );
         return new ScheduleGetResponse(
+                scheduleUserResponse,
                 schedule.getId(),
                 schedule.getUserName(),
                 schedule.getTitle(),
@@ -101,7 +121,14 @@ public class ScheduleService {
                 schedulePutRequest.getTitle(),
                 schedulePutRequest.getContent()
         );
+        User user = schedule.getUser();
+        ScheduleUserResponse scheduleUserResponse = new ScheduleUserResponse(
+                user.getId(),
+                user.getUserName(),
+                user.getEmail()
+        );
         return new SchedulePutResponse(
+                scheduleUserResponse,
                 schedule.getId(),
                 schedule.getUserName(),
                 schedule.getTitle(),

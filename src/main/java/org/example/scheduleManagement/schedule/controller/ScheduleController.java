@@ -14,10 +14,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @PostMapping("/users/{userId}/schedules")
+    @PostMapping("/{userId}/schedules")
     public ResponseEntity<SchedulePostResponse> schedulePost(
             @RequestBody SchedulePostRequest schedulePostRequest,
             @PathVariable Long userId
@@ -25,14 +26,14 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.createSchedule(userId, schedulePostRequest));
     }
 
-    @GetMapping("/users/schedules")
+    @GetMapping("/schedules")
     public ResponseEntity<List<ScheduleGetResponse>> getSchedules(
             @RequestParam(required = false) Long userId // 유저 아이디가 있을 수도 있고 없을 수도 있다.
     ) {
         return ResponseEntity.ok(scheduleService.getSchedules(userId));
     }
 
-    @GetMapping("/users/{userId}/schedules/{scheduleId}")
+    @GetMapping("/{userId}/schedules/{scheduleId}")
     public ResponseEntity<ScheduleGetResponse> getSchedule(
             @PathVariable Long userId,
             @PathVariable Long scheduleId
@@ -40,7 +41,7 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.getSchedule(userId, scheduleId));
     }
 
-    @PutMapping("/users/{userId}/schedules/{scheduleId}")
+    @PutMapping("/{userId}/schedules/{scheduleId}")
     public ResponseEntity<SchedulePutResponse> updateSchedule(
             @RequestBody SchedulePutRequest schedulePutRequest,
             @PathVariable Long userId,
@@ -49,7 +50,7 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.updateSchedule(userId, scheduleId, schedulePutRequest));
     }
 
-    @DeleteMapping("/users/{userId}/schedules/{scheduleId}")
+    @DeleteMapping("/{userId}/schedules/{scheduleId}")
     public void deleteSchedule(
             @PathVariable Long userId,
             @PathVariable Long scheduleId

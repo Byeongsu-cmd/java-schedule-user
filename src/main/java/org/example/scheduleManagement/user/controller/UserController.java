@@ -15,11 +15,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/users") // 공통 주소
 public class UserController {
     private final UserService userService;
 
     // 유저 등록
-    @PostMapping("/users")
+    @PostMapping()
     public ResponseEntity<UserPostResponse> createUser(
             @RequestBody UserPostRequest userPostRequest
     ) {
@@ -27,13 +28,13 @@ public class UserController {
     }
 
     // 유저 전체 조회
-    @GetMapping("/users")
+    @GetMapping()
     public ResponseEntity<List<UserGetResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getUsers());
     }
 
     // 선택 유저 조회
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserGetResponse> getUserById(
             @PathVariable Long userId
     ) {
@@ -41,7 +42,7 @@ public class UserController {
     }
 
     // 유저 정보 수정
-    @PutMapping("/users/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<UserPutResponse> updateUser(
             @PathVariable Long userId,
             @RequestBody UserPutRequest userPutRequest
@@ -50,10 +51,10 @@ public class UserController {
     }
 
     // 유저 정보 삭제
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/{userId}")
     public void deleteUser(
             @PathVariable Long userId,
-            @RequestBody UserDeleteRequest userDeleteRequest
+            @RequestParam UserDeleteRequest userDeleteRequest
     ) {
         userService.deleteUser(userId, userDeleteRequest);
     }

@@ -1,11 +1,13 @@
 package org.example.scheduleManagement.schedule.dto.post;
 
 import lombok.Getter;
+import org.example.scheduleManagement.user.dto.scheduleDto.ScheduleUserResponse;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class SchedulePostResponse {
+    private final ScheduleUserResponse scheduleUserResponse;
     private final Long id;
     private final String userName;
     private final String title;
@@ -14,6 +16,7 @@ public class SchedulePostResponse {
     private final LocalDateTime updateTime;
 
     public SchedulePostResponse(
+            ScheduleUserResponse scheduleUserResponse,
             Long id,
             String userName,
             String title,
@@ -21,6 +24,7 @@ public class SchedulePostResponse {
             LocalDateTime createTime,
             LocalDateTime updateTime
     ) {
+        this.scheduleUserResponse = scheduleUserResponse;
         this.id = id;
         this.userName = userName;
         this.title = title;
