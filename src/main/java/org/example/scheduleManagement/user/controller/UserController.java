@@ -3,8 +3,6 @@ package org.example.scheduleManagement.user.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduleManagement.user.dto.delete.UserDeleteRequest;
 import org.example.scheduleManagement.user.dto.get.UserGetResponse;
-import org.example.scheduleManagement.user.dto.post.UserPostRequest;
-import org.example.scheduleManagement.user.dto.post.UserPostResponse;
 import org.example.scheduleManagement.user.dto.put.UserPutRequest;
 import org.example.scheduleManagement.user.dto.put.UserPutResponse;
 import org.example.scheduleManagement.user.service.UserService;

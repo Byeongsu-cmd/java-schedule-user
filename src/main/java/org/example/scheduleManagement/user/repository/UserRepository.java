@@ -4,8 +4,11 @@ package org.example.scheduleManagement.user.repository;
 import org.example.scheduleManagement.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmailAndPassword(String email, String password);
+import java.util.Optional;
 
-    boolean existsByEmail(String email);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmailAndPassword(String email, String password);
+
+    // 이메일이 존재할 수도 있으니 Optional
+    Optional<User> findByEmail(String email);
 }

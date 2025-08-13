@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class SchedulePostResponse {
     private final ScheduleUserResponse scheduleUserResponse;
     private final Long id;
-    private final String userName;
+//    private final String userName;
     private final String title;
     private final String content;
     private final LocalDateTime createTime;
@@ -18,7 +18,7 @@ public class SchedulePostResponse {
     public SchedulePostResponse(
             ScheduleUserResponse scheduleUserResponse,
             Long id,
-            String userName,
+//            String userName,
             String title,
             String content,
             LocalDateTime createTime,
@@ -26,7 +26,7 @@ public class SchedulePostResponse {
     ) {
         this.scheduleUserResponse = scheduleUserResponse;
         this.id = id;
-        this.userName = userName;
+//        this.userName = userName;
         this.title = title;
         this.content = content;
         this.createTime = createTime;

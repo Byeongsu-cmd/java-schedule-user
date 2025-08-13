@@ -3,8 +3,6 @@ package org.example.scheduleManagement.user.service;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduleManagement.user.dto.delete.UserDeleteRequest;
 import org.example.scheduleManagement.user.dto.get.UserGetResponse;
-import org.example.scheduleManagement.user.dto.post.UserPostRequest;
-import org.example.scheduleManagement.user.dto.post.UserPostResponse;
 import org.example.scheduleManagement.user.dto.put.UserPutRequest;
 import org.example.scheduleManagement.user.dto.put.UserPutResponse;
 import org.example.scheduleManagement.user.entity.User;
@@ -41,9 +39,9 @@ public class UserService {
 
     // 유저 전체 조회
     public List<UserGetResponse> getUsers() {
-        List<User> users = userRepository.findAll();
-        List<UserGetResponse> userGetResponses = new ArrayList<>();
-        for (User user : users) {
+        List<User> users = userRepository.findAll(); // 유저 전체 정보를 불러온다.
+        List<UserGetResponse> userGetResponses = new ArrayList<>(); // 출력 값에 맞게 출력하기 위해 새로운 리스트를 생성
+        for (User user : users) { // 유저에 유저 정보를
             userGetResponses.add(new UserGetResponse(
                     user.getId(),
                     user.getUserName(),
@@ -60,7 +58,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증
                 () -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")
         );
-        return new UserGetResponse(
+        return new UserGetResponse( // 현재 저장된 정보 출력
                 user.getId(),
                 user.getUserName(),
                 user.getEmail(),
@@ -75,6 +73,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증
                 () -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")
         );
+
         // 비밀번호의 입력 값이 null이 아닐 때
         if (userPutRequest.getPassword() != null) {
             // 입력한 비밀번호가 저장된 비밀번호의 값과 다르다면 예외 처리
@@ -85,12 +84,12 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호를 입력해주세요.");
         }
 
-        user.updateUser(
+        user.updateUser( // 요청으로 들어온 유저 정보를 입력 받아 정보를 수정한다.
                 userPutRequest.getUserName(),
                 userPutRequest.getEmail(),
                 userPutRequest.getPassword()
         );
-        return new UserPutResponse(
+        return new UserPutResponse( // 현재 저장된 정보 출력
                 user.getId(),
                 user.getUserName(),
                 user.getEmail(),
@@ -114,6 +113,6 @@ public class UserService {
         } else { // 비밀번호의 값이 null일 경우
             throw new IllegalArgumentException("비밀번호를 입력해주세요.");
         }
-        userRepository.deleteById(userId);
+        userRepository.deleteById(userId); // 유저 정보 삭제
     }
 }

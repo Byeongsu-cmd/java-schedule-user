@@ -25,6 +25,36 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
 
+    // 유저명 수정 전
+//    // 일정 등록
+//    @Transactional
+//    public SchedulePostResponse createSchedule(Long userId, SchedulePostRequest schedulePostRequest) {
+//        User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
+//                () -> new IllegalArgumentException("유저를 찾을 수 없습니다.") // 예외 처리
+//        );
+//        Schedule schedule = new Schedule(
+//                schedulePostRequest.getUserName(),
+//                schedulePostRequest.getTitle(),
+//                schedulePostRequest.getContent(),
+//                user // 유저 아이디
+//        );
+//        ScheduleUserResponse scheduleUserResponse = new ScheduleUserResponse(
+//                user.getId(),
+//                user.getUserName(),
+//                user.getEmail()
+//        );
+//        scheduleRepository.save(schedule);
+//        return new SchedulePostResponse(
+//                scheduleUserResponse,
+//                schedule.getId(),
+//                schedule.getUserName(),
+//                schedule.getTitle(),
+//                schedule.getContent(),
+//                schedule.getCreateTime(),
+//                schedule.getModifiedTime()
+//        );
+//    }
+    // 유저명 제외 수정 후
     // 일정 등록
     @Transactional
     public SchedulePostResponse createSchedule(Long userId, SchedulePostRequest schedulePostRequest) {
@@ -32,7 +62,7 @@ public class ScheduleService {
                 () -> new IllegalArgumentException("유저를 찾을 수 없습니다.") // 예외 처리
         );
         Schedule schedule = new Schedule(
-                schedulePostRequest.getUserName(),
+//                schedulePostRequest.getUserName(),
                 schedulePostRequest.getTitle(),
                 schedulePostRequest.getContent(),
                 user // 유저 아이디
@@ -46,7 +76,7 @@ public class ScheduleService {
         return new SchedulePostResponse(
                 scheduleUserResponse,
                 schedule.getId(),
-                schedule.getUserName(),
+//                schedule.getUserName(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getCreateTime(),
@@ -80,7 +110,7 @@ public class ScheduleService {
             scheduleGetResponses.add(new ScheduleGetResponse(
                     scheduleUserResponse,
                     schedule.getId(),
-                    schedule.getUserName(),
+//                    schedule.getUserName(),
                     schedule.getTitle(),
                     schedule.getContent(),
                     schedule.getCreateTime(),
@@ -104,7 +134,7 @@ public class ScheduleService {
         return new ScheduleGetResponse(
                 scheduleUserResponse,
                 schedule.getId(),
-                schedule.getUserName(),
+//                schedule.getUserName(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getCreateTime(),
@@ -131,7 +161,7 @@ public class ScheduleService {
         return new SchedulePutResponse(
                 scheduleUserResponse,
                 schedule.getId(),
-                schedule.getUserName(),
+//                schedule.getUserName(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getCreateTime(),

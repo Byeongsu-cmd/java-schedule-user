@@ -17,8 +17,8 @@ public class Schedule extends BaseEntity {
     @Column(name = "id")
     private Long id; // 고유 아이디
 
-    @Column(name = "user_name", nullable = false)
-    private String userName; // 임시 유저 이름
+//    @Column(name = "user_name", nullable = false) 유저에 이미 유저 이름이 포함되어 있기 때문에 주석 처리
+//    private String userName; // 임시 유저 이름
 
     @Column(name = "title", nullable = false)
     private String title; // 일정 제목
@@ -30,8 +30,15 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Schedule(String userName, String title, String content, User user) {
-        this.userName = userName;
+//    public Schedule(String userName, String title, String content, User user) {
+//        this.userName = userName;
+//        this.title = title;
+//        this.content = content;
+//        this.user = user;
+//    }
+
+    // 유저명 수정 후
+    public Schedule(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.user = user;
