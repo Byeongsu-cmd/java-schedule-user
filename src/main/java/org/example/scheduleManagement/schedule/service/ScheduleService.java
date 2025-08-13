@@ -48,13 +48,19 @@ public class ScheduleService {
     // 일정 전체 조회
     @Transactional(readOnly = true)
     public List<ScheduleGetResponse> getSchedules(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
-                () -> new IllegalArgumentException("유저를 찾을 수 없습니다.") // 예외 처리
-        );
+        // 일정 전체 조회 로직
+        List<Schedule> schedules = scheduleRepository.findAll();
 
-        // 유저 아이디와 일정을 작성한 유저가 같다면 해당 유저의 전체 일정을 조회
-        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
+        if (userId != null) { // 만약 유저 아이디의 값이 있다면...
+            schedules = scheduleRepository.findByUserId(userId); // 일정 저장소에 유저 아이디로 조회
 
+            User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
+                    () -> new IllegalArgumentException("유저를 찾을 수 없습니다.") // 예외 처리
+            );
+        }
+
+        // 출력을 타입이 List<ScheduleGetResponse>이니 출력 형태를 맞추기위해 새로운 리스트 생성
+        // 향상된 for문을 사용하여 DB에 저장되어 있는 데이터들을 일정 등록 리스폰스에 담아서 출력한다.
         List<ScheduleGetResponse> scheduleGetResponses = new ArrayList<>();
         for (Schedule schedule : schedules) {
             scheduleGetResponses.add(new ScheduleGetResponse(

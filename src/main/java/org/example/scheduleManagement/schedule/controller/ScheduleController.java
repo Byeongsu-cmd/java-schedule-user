@@ -25,9 +25,9 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.createSchedule(userId, schedulePostRequest));
     }
 
-    @GetMapping("/users/{userId}/schedules")
+    @GetMapping("/users/schedules")
     public ResponseEntity<List<ScheduleGetResponse>> getSchedules(
-            @PathVariable Long userId
+            @RequestParam(required = false) Long userId // 유저 아이디가 있을 수도 있고 없을 수도 있다.
     ) {
         return ResponseEntity.ok(scheduleService.getSchedules(userId));
     }
