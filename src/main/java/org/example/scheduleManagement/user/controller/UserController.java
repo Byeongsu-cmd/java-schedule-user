@@ -1,6 +1,7 @@
 package org.example.scheduleManagement.user.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduleManagement.user.dto.delete.UserDeleteRequest;
 import org.example.scheduleManagement.user.dto.get.UserGetResponse;
 import org.example.scheduleManagement.user.dto.post.UserPostRequest;
 import org.example.scheduleManagement.user.dto.post.UserPostResponse;
@@ -44,15 +45,16 @@ public class UserController {
     public ResponseEntity<UserPutResponse> updateUser(
             @PathVariable Long userId,
             @RequestBody UserPutRequest userPutRequest
-    ){
+    ) {
         return ResponseEntity.ok(userService.updateUser(userId, userPutRequest));
     }
 
     // 유저 정보 삭제
     @DeleteMapping("/users/{userId}")
     public void deleteUser(
-            @PathVariable Long userId
-    ){
-        userService.deleteUser(userId);
+            @PathVariable Long userId,
+            @RequestBody UserDeleteRequest userDeleteRequest
+    ) {
+        userService.deleteUser(userId, userDeleteRequest);
     }
 }

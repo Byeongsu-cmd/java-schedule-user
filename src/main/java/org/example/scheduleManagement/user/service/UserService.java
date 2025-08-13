@@ -1,6 +1,7 @@
 package org.example.scheduleManagement.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduleManagement.user.dto.delete.UserDeleteRequest;
 import org.example.scheduleManagement.user.dto.get.UserGetResponse;
 import org.example.scheduleManagement.user.dto.post.UserPostRequest;
 import org.example.scheduleManagement.user.dto.post.UserPostResponse;
@@ -75,6 +76,16 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증
                 () -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")
         );
+        // 비밀번호의 입력 값이 null이 아닐 때
+        if (userPutRequest.getPassword()!= null) {
+            // 입력한 비밀번호가 저장된 비밀번호의 값과 다르다면 예외 처리
+            if(!userPutRequest.getPassword().equals(user.getPassword())) {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+        } else{ // 비밀번호의 값이 null일 경우
+            throw new IllegalArgumentException("비밀번호를 입력해주세요.");
+        }
+
         user.updateUser(
                 userPutRequest.getUserName(),
                 userPutRequest.getEmail(),
@@ -91,10 +102,19 @@ public class UserService {
 
     // 유저 정보 삭제
     @Transactional
-    public void deleteUser(Long userId) {
+    public void deleteUser(Long userId, UserDeleteRequest userDeleteRequest) {
         User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증
                 () -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")
         );
+        // 비밀번호의 입력 값이 null이 아닐 때
+        if(userDeleteRequest.getPassword()!= null) {
+            // 입력한 비밀번호가 저장된 비밀번호의 값과 다르다면 예외 처리
+            if(!userDeleteRequest.getPassword().equals(user.getPassword())) {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+        } else { // 비밀번호의 값이 null일 경우
+            throw new IllegalArgumentException("비밀번호를 입력해주세요.");
+        }
         userRepository.deleteById(userId);
     }
 }
