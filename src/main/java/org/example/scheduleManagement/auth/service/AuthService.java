@@ -13,21 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor  // final 필드에 대한 생성자를 자동 생성
 public class AuthService {
     private final UserRepository userRepository;
 
     // 회원가입
     @Transactional
     public SignupResponse signup(SignupRequest signupRequest) {
+        // 이메일 중복 체크
         if (userRepository.findByEmail(signupRequest.getEmail()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 이메일 입니다.");
         }
+        // User 엔티티 생성
         User user = new User(
                 signupRequest.getUserName(),
                 signupRequest.getEmail(),
                 signupRequest.getPassword()
         );
+        // DB 저장
         userRepository.save(user);
         return new SignupResponse(user.getUserName());
     }
@@ -35,10 +38,12 @@ public class AuthService {
     // 로그인
     @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest loginRequest) {
+        // 이메일과 비밀번호로 유저 검색 (없으면 401 예외)
         User user = userRepository.findByEmailAndPassword(
                 loginRequest.getEmail(),
                 loginRequest.getPassword()
         ).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
         return new LoginResponse(user.getId(), user.getUserName());
     }
 }

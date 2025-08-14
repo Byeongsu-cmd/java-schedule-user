@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor // final 필드에 대한 생성자를 자동 생성
 @Transactional(readOnly = true)
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
@@ -92,7 +92,7 @@ public class ScheduleService {
         if (userId != null) { // 만약 유저 아이디의 값이 있다면...
             schedules = scheduleRepository.findByUserId(userId); // 일정 저장소에 유저 아이디로 조회
 
-            User user = userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
+            userRepository.findById(userId).orElseThrow( // 유저 아이디 검증 로직
                     () -> new IllegalArgumentException("유저를 찾을 수 없습니다.") // 예외 처리
             );
         }

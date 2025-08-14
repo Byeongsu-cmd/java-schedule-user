@@ -8,8 +8,8 @@ import org.example.scheduleManagement.user.entity.User;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@Table(name = "Schedule")
+@NoArgsConstructor // 기본 생성자(매개변수가 없는 생성자)를 생성
+@Table(name = "Schedule") // 테이블 명은 Schedule
 public class Schedule extends BaseEntity {
 
     @Id
@@ -20,14 +20,14 @@ public class Schedule extends BaseEntity {
 //    @Column(name = "user_name", nullable = false) 유저에 이미 유저 이름이 포함되어 있기 때문에 주석 처리
 //    private String userName; // 임시 유저 이름
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false) // null이 포함될 수 없다.
     private String title; // 일정 제목
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false) // null이 포함될 수 없다.
     private String content; // 일정 내용
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false) // null이 포함될 수 없다.
     private User user;
 
 //    public Schedule(String userName, String title, String content, User user) {

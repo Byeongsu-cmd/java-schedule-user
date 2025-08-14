@@ -5,7 +5,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration // 스프링 설정 클래스
 public class FilterConfig {
     @Bean
     public FilterRegistrationBean loginFilter() {

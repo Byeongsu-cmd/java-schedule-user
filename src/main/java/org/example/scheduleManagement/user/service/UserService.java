@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor // final 필드에 대한 생성자를 자동 생성
 @Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
