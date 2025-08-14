@@ -56,6 +56,86 @@ Lv4 주요 기능
 - 로그인 시 이메일과 비밀번호가 일치하지 않을 경우 HTTP Status code 401을 반환
 
 패키지 구조
+````
+ src
+    ├── main
+    │   ├── java
+    │   │   └── org
+    │   │       └── example
+    │   │           └── scheduleManagement
+    │   │               ├── JavaScheduleUserApplication.java
+    │   │               ├── auth
+    │   │               │   ├── Filter
+    │   │               │   │   ├── FilterConfig.java
+    │   │               │   │   └── LoginFilter.java
+    │   │               │   ├── controller
+    │   │               │   │   └── AuthController.java
+    │   │               │   ├── dto
+    │   │               │   │   ├── login
+    │   │               │   │   │   ├── LoginRequest.java
+    │   │               │   │   │   └── LoginResponse.java
+    │   │               │   │   └── signup
+    │   │               │   │       ├── SignupRequest.java
+    │   │               │   │       └── SignupResponse.java
+    │   │               │   └── service
+    │   │               │       └── AuthService.java
+    │   │               ├── baseEntity
+    │   │               │   └── BaseEntity.java
+    │   │               ├── config
+    │   │               │   └── JpaConfig.java
+    │   │               ├── schedule
+    │   │               │   ├── controller
+    │   │               │   │   └── ScheduleController.java
+    │   │               │   ├── dto
+    │   │               │   │   ├── delete
+    │   │               │   │   │   └── ScheduleDeleteRequest.java
+    │   │               │   │   ├── get
+    │   │               │   │   │   └── ScheduleGetResponse.java
+    │   │               │   │   ├── post
+    │   │               │   │   │   ├── SchedulePostRequest.java
+    │   │               │   │   │   └── SchedulePostResponse.java
+    │   │               │   │   └── put
+    │   │               │   │       ├── SchedulePutRequest.java
+    │   │               │   │       └── SchedulePutResponse.java
+    │   │               │   ├── entity
+    │   │               │   │   └── Schedule.java
+    │   │               │   ├── repository
+    │   │               │   │   └── ScheduleRepository.java
+    │   │               │   └── service
+    │   │               │       └── ScheduleService.java
+    │   │               └── user
+    │   │                   ├── controller
+    │   │                   │   └── UserController.java
+    │   │                   ├── dto
+    │   │                   │   ├── delete
+    │   │                   │   │   └── UserDeleteRequest.java
+    │   │                   │   ├── get
+    │   │                   │   │   └── UserGetResponse.java
+    │   │                   │   ├── post
+    │   │                   │   │   ├── UserPostRequest.java
+    │   │                   │   │   └── UserPostResponse.java
+    │   │                   │   ├── put
+    │   │                   │   │   ├── UserPutRequest.java
+    │   │                   │   │   └── UserPutResponse.java
+    │   │                   │   └── scheduleDto
+    │   │                   │       └── ScheduleUserResponse.java
+    │   │                   ├── entity
+    │   │                   │   └── User.java
+    │   │                   ├── repository
+    │   │                   │   └── UserRepository.java
+    │   │                   └── service
+    │   │                       └── UserService.java
+    │   └── resources
+    │       ├── application.yml
+    │       ├── static
+    │       └── templates
+    └── test
+        └── java
+            ├── org
+            │   └── example
+            └── scheduleManagement
+                └── JavaScheduleUserApplicationTests.java
+````
 
 실행 방법
 - ScheduleManagementApplication 실행 후 포스트맨을 연동하여 각 기능의 맞는 입력 값을 입력 후 저장 및 출력 확인
