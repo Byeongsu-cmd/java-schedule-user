@@ -38,7 +38,7 @@ public class AuthController {
 
         HttpSession httpSession = request.getSession();
         httpSession.setAttribute("LOGIN_USER", loginResponse.getUserName());
-        return new LoginResponse(loginResponse.getUserName());
+        return new LoginResponse(loginResponse.getUserId(),loginResponse.getUserName());
     }
     // 로그아웃
     @PostMapping("/logout")

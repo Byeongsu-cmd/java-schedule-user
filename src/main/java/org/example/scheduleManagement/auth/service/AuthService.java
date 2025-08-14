@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
+
     // 회원가입
     @Transactional
     public SignupResponse signup(SignupRequest signupRequest) {
@@ -38,7 +39,7 @@ public class AuthService {
                 loginRequest.getEmail(),
                 loginRequest.getPassword()
         ).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-        return new LoginResponse(user.getUserName());
+        return new LoginResponse(user.getId(), user.getUserName());
     }
 }
 
