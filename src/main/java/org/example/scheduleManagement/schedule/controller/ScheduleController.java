@@ -52,11 +52,12 @@ public class ScheduleController {
     }
 
     @PostMapping("/{userId}/schedules/{scheduleId}")
-    public void deleteSchedule(
+    public ResponseEntity<Void> deleteSchedule(
             @PathVariable Long userId,
             @PathVariable Long scheduleId,
             @RequestBody ScheduleDeleteRequest scheduleDeleteRequest
     ) {
         scheduleService.deleteSchedule(userId, scheduleId, scheduleDeleteRequest);
+        return ResponseEntity.ok().build();
     }
 }

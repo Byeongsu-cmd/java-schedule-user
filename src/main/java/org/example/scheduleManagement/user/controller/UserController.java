@@ -50,10 +50,11 @@ public class UserController {
 
     // 유저 정보 삭제
     @PostMapping("/{userId}")
-    public void deleteUser(
+    public ResponseEntity<Void> deleteUser(
             @PathVariable Long userId,
             @RequestBody UserDeleteRequest userDeleteRequest
     ) {
         userService.deleteUser(userId, userDeleteRequest);
+        return ResponseEntity.ok().build();
     }
 }
